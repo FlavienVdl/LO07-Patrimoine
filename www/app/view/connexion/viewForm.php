@@ -18,7 +18,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
         }
         ?>
         <form action="">
-            <input type="hidden" name='action' value='connexionVerif'>
+            <input type="hidden" name='action' value='connexion'>
             <div class="form-group">
                 <label for="login">Login : </label>
                 <input type="text" name='login' class="form-control" style="width: 200px">

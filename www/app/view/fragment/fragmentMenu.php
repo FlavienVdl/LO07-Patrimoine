@@ -1,4 +1,4 @@
-<!-- ----- début fragmentCaveMenu -->
+<!-- ----- début fragmentMenu -->
 
 <nav class="navbar navbar-expand-lg bg-warning fixed-top">
   <div class="container-fluid">
@@ -13,11 +13,12 @@
         <!-- Menu admin -->
 
         <?php
+        include_once $root . '/app/model/ModelPersonne.php';
         // if (isset($_SESSION['login'])) {
-        //   // if ($_SESSION['user']->getStatut() == 0) {
+        //   // if ($_SESSION['user']->getStatut() == ModelPersonne::ADMINISTRATEUR) {
         //   if ($_SESSION['login']=='vide') {
             include $root . '/app/view/fragment/fragmentNavAdmin.html';
-          // } else if ($_SESSION['user']->getStatut() == 1) {
+          // } else if ($_SESSION['user']->getStatut() == ModelPersonne::CLIENT) {
             include $root . '/app/view/fragment/fragmentNavClient.html';
         //   }
         // }
@@ -36,8 +37,7 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Se
-            connecter</a>
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Se connecter</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="router1.php?action=connexionFormulaire">Login</a></li>
             <li><a class="dropdown-item" href="router1.php?action=inscription">S'inscrire</a></li>
@@ -49,4 +49,4 @@
   </div>
 </nav>
 
-<!-- ----- fin fragmentCaveMenu -->
+<!-- ----- fin fragmentMenu -->

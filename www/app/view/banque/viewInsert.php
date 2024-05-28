@@ -1,4 +1,4 @@
-<!-- ----- début viewAll -->
+<!-- ----- début viewInsert -->
 <?php
 
 require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
@@ -23,6 +23,6 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
             <button class="btn btn-primary" type="submit">GO</button>
         </form>
     </div>
-        <?php include $root . '/app/view/fragment/fragmentPatrimoineFooter.html'; ?>
+    <?php include $root . '/app/view/fragment/fragmentPatrimoineFooter.html'; ?>
 
-        <!-- ----- fin viewAll -->
+    <!-- ----- fin viewInsert -->

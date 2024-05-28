@@ -27,7 +27,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
           // La liste des producteurs est dans une variable $results             
           foreach ($results as $element) {
               printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $element->getNom(), 
-                 $element->getPrenom(), $element->getLogin(), $element->getStatut());
+                 $element->getPrenom(), $element->getLogin(), $element->getPassword());
           }
           ?>
       </tbody>

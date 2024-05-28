@@ -1,10 +1,9 @@
-<!-- ----- debut ControllerPersonne -->
+<!-- ----- debut ControllerAdministrateur -->
 <?php
 require ('../model/ModelPersonne.php');
 
-class ControllerPersonne
+class ControllerAdministrateur
 {
-    // --- page d'accueil
     public static function clientReadAll()
     {
         $titre = "Liste des clients";
@@ -13,11 +12,11 @@ class ControllerPersonne
         include 'config.php';
         $vue = $root . '/app/view/personne/viewAll.php';
         if (DEBUG)
-            echo ("ControllerPersonne: banqueReadAll : vue = $vue");
+            echo ("ControllerAdministrateur: banqueReadAll : vue = $vue");
         require ($vue);
     }
 
-    public static function clientFilterAdmin()
+    public static function adminReadAll()
     {
         $titre = "Liste des admins";
         $results = ModelPersonne::getAllAdmin();
@@ -31,4 +30,4 @@ class ControllerPersonne
 
 }
 ?>
-<!-- ----- fin ControllerPersonne -->
+<!-- ----- fin ControllerAdministrateur -->

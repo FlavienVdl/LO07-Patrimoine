@@ -3,7 +3,8 @@
 require ('../controller/ControllerBanque.php');
 require ('../controller/ControllerPatrimoine.php');
 require ('../controller/ControllerCompte.php');
-require ('../controller/ControllerPersonne.php');
+require ('../controller/ControllerAdministrateur.php');
+require ('../controller/ControllerClient.php');
 require ('../controller/ControllerResidence.php');
 require ('../controller/ControllerConnexion.php');
 
@@ -40,10 +41,10 @@ switch ($action) {
     ControllerCompte::$action();
     break;
   case "clientReadAll":
-    ControllerPersonne::$action();
+    ControllerAdministrateur::$action();
     break;
-  case "clientFilterAdmin":
-    ControllerPersonne::$action();
+  case "adminReadAll":
+    ControllerAdministrateur::$action();
     break;
   case "residenceReadAll":
     ControllerResidence::$action();
@@ -60,7 +61,7 @@ switch ($action) {
   case "insertionInscription":
     ControllerConnexion::$action();
     break;
-  case "connexionVerif":
+  case "connexion":
     ControllerConnexion::$action();
     break;
   // Tache par défaut

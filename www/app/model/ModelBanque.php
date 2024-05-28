@@ -181,4 +181,4 @@ class ModelBanque
 
 }
 ?>
-<!-- ----- fin ModelVin -->
+<!-- ----- fin ModelBanque -->

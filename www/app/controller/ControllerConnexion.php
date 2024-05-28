@@ -11,6 +11,24 @@ class ControllerConnexion
         require ($root . '/app/view/connexion/viewForm.php');
     }
 
+    public static function connexion()
+    {
+        include 'config.php';
+        $login = $_GET['login'];
+        $password = $_GET['password'];
+        $results = ModelPersonne::connexion($login, $password);
+        if ($results == 1) {
+            $titre = "Connexion réussie";
+            $_SESSION['login'] = $login;
+            $vue = $root . '/app/view/connexion/viewConnexionReussie.php';
+            require ($vue);
+        } else {
+            $titre = "Connexion échouée";
+            $vue = $root . '/app/view/connexion/viewConnexionEchouee.php';
+            require ($vue);
+        }
+    }
+
     public static function inscription()
     {
         include 'config.php';
@@ -19,6 +37,30 @@ class ControllerConnexion
         require ($vue);
     }
 
+    public static function insertionInscription()
+    {
+        include 'config.php';
+        $name = $_GET['name'];
+        $firstname = $_GET['firstname'];
+        $login = $_GET['login'];
+        $password = $_GET['password'];
+        $results = ModelPersonne::insert($name, $firstname, $login, $password);
+        $titre = "Inscription validée";
+        $vue = $root . '/app/view/connexion/viewInscriptionValidation.php';
+        require ($vue);
+    }
+
+    public static function deconnexion()
+    {
+        include 'config.php';
+        session_unset();
+        session_destroy();
+        session_start();
+        $_SESSION['login'] = "Connexion";
+        $titre = "Déconnexion";
+        $vue = $root . '/app/view/connexion/viewDeconnexion.php';
+        require ($vue);
+    }
 }
 ?>
 <!-- ----- fin ControllerConnexion -->

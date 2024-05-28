@@ -1,17 +1,22 @@
-<!-- ----- debut ModelCompte -->
+<!-- ----- debut ModelPersonne -->
 
 <?php
 require_once 'Model.php';
 
-class ModelPersonne {
+class ModelPersonne
+{
     private $id, $nom, $prenom, $statut, $login, $password;
 
-    public function __construct($id = NULL, $nom = NULL, $prenom = NULL, $statut = NULL, $login = NULL, $password = NULL) {
+    public const ADMINISTRATEUR = 0;
+    public const CLIENT = 1;
+
+    public function __construct($id = NULL, $nom = NULL, $prenom = NULL, $statut = NULL, $login = NULL, $password = NULL)
+    {
         if (!is_null($id) && !is_null($nom) && !is_null($prenom) && !is_null($statut) && !is_null($login) && !is_null($password)) {
             $this->id = $id;
             $this->nom = $nom;
             $this->prenom = $prenom;
-            $this->statut = $statut == 0 ? "admin" : "client";
+            $this->statut = $statut;
             $this->login = $login;
             $this->password = $password;
         }
@@ -81,7 +86,8 @@ class ModelPersonne {
     }
 
     // retourne la personne liée à un id
-    public static function getPersonne($id) {
+    public static function getPersonne($id)
+    {
         try {
             $database = Model::getInstance();
             $query = "select * from personne where id = :id";
@@ -96,11 +102,13 @@ class ModelPersonne {
     }
 
     // retourne une liste de tous les clients
-    public static function getAllClient() {
+    public static function getAllClient()
+    {
         try {
             $database = Model::getInstance();
-            $query = "select * from personne where statut = 1";
-            $statement = $database->query($query);
+            $query = "select * from personne where statut = :statut";
+            $statement = $database->prepare($query);
+            $statement->execute(['statut' => ModelPersonne::CLIENT]);
             $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelPersonne");
             return $results;
         } catch (PDOException $e) {
@@ -110,11 +118,13 @@ class ModelPersonne {
     }
 
     // retourne une liste de tous les admins
-    public static function getAllAdmin() {
+    public static function getAllAdmin()
+    {
         try {
             $database = Model::getInstance();
-            $query = "select * from personne where statut = 0";
-            $statement = $database->query($query);
+            $query = "select * from personne where statut = :statut";
+            $statement = $database->prepare($query);
+            $statement->execute(['statut' => ModelPersonne::ADMINISTRATEUR]);
             $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelPersonne");
             return $results;
         } catch (PDOException $e) {
@@ -122,6 +132,81 @@ class ModelPersonne {
             return NULL;
         }
     }
+
+    // insère une nouvelle personne
+    public static function insert($nom, $prenom, $login, $password)
+    {
+        try {
+            $database = Model::getInstance();
+            if (!$database) {
+                throw new PDOException("Échec de la connexion à la base de données");
+            }
+
+            $id = self::getNewId();
+            if (is_null($id)) {
+                throw new PDOException("Échec de la génération d'un nouvel ID");
+            }
+
+            $query = "insert into personne(id, nom, prenom, statut, login, password) values (:id, :nom, :prenom, 1, :login, :password)";
+            $statement = $database->prepare($query);
+            $success = $statement->execute([
+                'id' => $id,
+                'nom' => $nom,
+                'prenom' => $prenom,
+                'login' => $login,
+                'password' => $password
+            ]);
+
+            if ($success) {
+                return true;
+            } else {
+                $errorInfo = $statement->errorInfo();
+                throw new PDOException("Erreur d'insertion : " . $errorInfo[2]);
+            }
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return false;
+        }
+    }
+
+
+    // renvoie un nouvel id
+    public static function getNewId()
+    {
+        try {
+            $database = Model::getInstance();
+            $query = "select max(id) from personne";
+            $statement = $database->query($query);
+            $results = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+            return $results[0] + 1;
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return NULL;
+        }
+    }
+
+    // renvoie la personne correspondant à un login et un mot de passe
+    public static function connexion($login, $password)
+    {
+        try {
+            $database = Model::getInstance();
+            $query = "select * from personne where login = :login and password = :password";
+            $statement = $database->prepare($query);
+            $statement->execute([
+                'login' => $login,
+                'password' => $password
+            ]);
+            $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelPersonne");
+            if (count($results)>0) {
+                return $results[0];
+            } else {
+                return NULL;
+            }
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return NULL;
+        }
+    }
 }
 ?>
-<!-- ----- fin ModelCompte -->
+<!-- ----- fin ModelPersonne -->
