@@ -55,14 +55,13 @@ class ControllerConnexion
     public static function deconnexion()
     {
         include 'config.php';
-        session_unset();
-        session_destroy();
-        session_start();
         $_SESSION['login'] = "vide";
         $_SESSION['role'] = -1;
         $titre = "Déconnexion";
+        $messages = array();
+        $messages[] = "Vous êtes déconnecté";
         $vue = $root . '/app/view/connexion/viewDeconnexion.php';
-        require ($vue);
+        require ($vue); 
     }
 }
 ?>
