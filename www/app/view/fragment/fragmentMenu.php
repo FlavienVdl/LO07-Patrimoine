@@ -14,14 +14,15 @@
 
         <?php
         include_once $root . '/app/model/ModelPersonne.php';
-        // if (isset($_SESSION['login'])) {
-        //   // if ($_SESSION['user']->getStatut() == ModelPersonne::ADMINISTRATEUR) {
-        //   if ($_SESSION['login']=='vide') {
-            include $root . '/app/view/fragment/fragmentNavAdmin.html';
-          // } else if ($_SESSION['user']->getStatut() == ModelPersonne::CLIENT) {
-            include $root . '/app/view/fragment/fragmentNavClient.html';
-        //   }
-        // }
+        if (isset($_SESSION['login']) && isset($_SESSION['role'])) {
+          if ($_SESSION['login'] != 'vide' && $_SESSION['role'] != 'vide') {
+            if ($_SESSION['role'] == ModelPersonne::ADMINISTRATEUR) {
+              include $root . '/app/view/fragment/fragmentNavAdmin.html';
+            } else if ($_SESSION['role'] == ModelPersonne::CLIENT) {
+              include $root . '/app/view/fragment/fragmentNavClient.html';
+            }
+          }
+        }
         ?>
 
         <!-- Menu commun -->

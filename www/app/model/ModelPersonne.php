@@ -190,12 +190,31 @@ class ModelPersonne
     {
         try {
             $database = Model::getInstance();
-            $query = "select * from personne where login = :login and password = :password";
+            $query = "select statut from personne where login = :login and password = :password";
             $statement = $database->prepare($query);
             $statement->execute([
                 'login' => $login,
                 'password' => $password
             ]);
+            $results = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+            if (count($results) > 0) {
+                return $results[0];
+            } else {
+                return -1;
+            }
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return NULL;
+        }
+    }
+
+    public static function getPersonneByLogin($login)
+    {
+        try {
+            $database = Model::getInstance();
+            $query = "select * from personne where login = :login";
+            $statement = $database->prepare($query);
+            $statement->execute(['login' => $login]);
             $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelPersonne");
             if (count($results)>0) {
                 return $results[0];

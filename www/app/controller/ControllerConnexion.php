@@ -17,11 +17,13 @@ class ControllerConnexion
         $login = $_GET['login'];
         $password = $_GET['password'];
         $results = ModelPersonne::connexion($login, $password);
-        if ($results == 1) {
+        if ($results != -1) {
             $titre = "Connexion réussie";
             $_SESSION['login'] = $login;
+            $_SESSION['role'] = $results;
             $vue = $root . '/app/view/connexion/viewConnexionReussie.php';
             require ($vue);
+
         } else {
             $titre = "Connexion échouée";
             $vue = $root . '/app/view/connexion/viewConnexionEchouee.php';
@@ -56,7 +58,8 @@ class ControllerConnexion
         session_unset();
         session_destroy();
         session_start();
-        $_SESSION['login'] = "Connexion";
+        $_SESSION['login'] = "vide";
+        $_SESSION['role'] = -1;
         $titre = "Déconnexion";
         $vue = $root . '/app/view/connexion/viewDeconnexion.php';
         require ($vue);

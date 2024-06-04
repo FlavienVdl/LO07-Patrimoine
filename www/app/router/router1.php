@@ -7,6 +7,7 @@ require ('../controller/ControllerAdministrateur.php');
 require ('../controller/ControllerClient.php');
 require ('../controller/ControllerResidence.php');
 require ('../controller/ControllerConnexion.php');
+session_start();
 
 
 // --- récupération de l'action passée dans l'URL
