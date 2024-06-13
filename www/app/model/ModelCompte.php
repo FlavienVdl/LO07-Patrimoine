@@ -152,6 +152,24 @@ class ModelCompte
         }
     }
 
+    public static function getAllOfClientById($id){
+        try {
+            $database = Model::getInstance();
+            $query = "SELECT compte.id, compte.label, compte.montant, banque.label AS banque_label, personne.nom, personne.prenom
+                        FROM compte
+                        JOIN banque ON compte.banque_id = banque.id
+                        JOIN personne ON compte.personne_id = personne.id
+                        WHERE personne.id = :id";
+            $statement = $database->prepare($query);
+            $statement->execute(['id' => $id]);
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $results;
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return -1;
+        }
+    }
+
     // insère un compte dans la base
     public static function insert($label, $montant, $banque_id, $personne_id)
     {
@@ -233,6 +251,36 @@ class ModelCompte
         }
         return $messages;
     }
+
+    // Retourne un compte à partir de son label
+    public static function getCompteByLabel($label)
+    {
+        try {
+            $database = Model::getInstance();
+            $query = "SELECT * FROM compte WHERE label = :label";
+            $statement = $database->prepare($query);
+            $statement->execute(['label' => $label]);
+            $results = $statement->fetch(PDO::FETCH_ASSOC);
+            return $results;
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return -1;
+        }
+    }
+
+    // Met à jour le montant d'un compte
+    public static function update($id, $montant)
+    {
+        try {
+            $database = Model::getInstance();
+            $query = "UPDATE compte SET montant = :montant WHERE id = :id";
+            $statement = $database->prepare($query);
+            $statement->execute(['montant' => $montant, 'id' => $id]);
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+        }
+    }
+
 }
 ?>
 <!-- ----- fin ModelCompte -->

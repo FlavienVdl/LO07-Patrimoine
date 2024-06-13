@@ -11,6 +11,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
         include $root . '/app/view/fragment/fragmentPatrimoineJumbotron.html';
         ?>
         <!-- ===================================================== -->
+        <h2><?php echo $titre ?></h2>
         <?php
         if ($results) {
             echo ("<h3>La nouvelle banque a été ajoutée </h3>");
@@ -29,4 +30,4 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
         include $root . '/app/view/fragment/fragmentPatrimoineFooter.html';
         ?>
 
-    <!-- ----- fin viewInserted -->
+        <!-- ----- fin viewInserted -->

@@ -10,7 +10,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
         include $root . '/app/view/fragment/fragmentMenu.php';
         include $root . '/app/view/fragment/fragmentPatrimoineJumbotron.html';
         ?>
-        <h2>Formulaire pour l'ajout d'une banque par l'administrateur</h2>
+        <h2><?php echo $titre ?></h2>
         <form role="form" action="router1.php" method="get">
             <input type="hidden" name='action' value='banqueCreated'>
             <div class="form-group">

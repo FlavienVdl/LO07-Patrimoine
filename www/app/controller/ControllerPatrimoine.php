@@ -11,6 +11,7 @@ class ControllerPatrimoine {
      echo ("ControllerPatrimoine : patrimoineAccueil : vue = $vue");
     require ($vue);
    }
+
 }
 ?>
 <!-- ----- fin ControllerPatrimoine -->

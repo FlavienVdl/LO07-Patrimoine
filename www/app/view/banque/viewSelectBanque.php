@@ -10,7 +10,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
         include $root . '/app/view/fragment/fragmentMenu.php';
         include $root . '/app/view/fragment/fragmentPatrimoineJumbotron.html';
         ?>
-        <h2>Liste des banques</h2>
+        <h2><?php echo $titre ?></h2>
         <form role="form" method='get' action='router1.php'>
             <div class="form-group">
                 <input type="hidden" name='action' value='comptesBanqueSelected'>
@@ -23,7 +23,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
                     ?>
                 </select>
             </div>
-            <p/><br />
+            <p /><br />
             <button class="btn btn-primary" type="submit">Submit form</button>
         </form>
     </div>

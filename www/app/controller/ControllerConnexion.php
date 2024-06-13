@@ -1,6 +1,5 @@
 <!-- ----- debut ControllerConnexion -->
 <?php
-require_once '../model/ModelPersonne.php';
 
 class ControllerConnexion
 {
@@ -55,13 +54,11 @@ class ControllerConnexion
     public static function deconnexion()
     {
         include 'config.php';
-        $_SESSION['login'] = "vide";
-        $_SESSION['role'] = -1;
-        $titre = "Déconnexion";
-        $messages = array();
-        $messages[] = "Vous êtes déconnecté";
+        $_SESSION["login"] = "vide";
+        $_SESSION["role"] = -1;
+        $titre = "Deconnexion";
         $vue = $root . '/app/view/connexion/viewDeconnexion.php';
-        require ($vue); 
+        require ($vue);
     }
 }
 ?>

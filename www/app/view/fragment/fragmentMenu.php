@@ -30,21 +30,33 @@
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">Innovations</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="router1.php?action=innovationOriginale">Proposez une fonctionnalité
-                originale</a></li>
+            <li><a class="dropdown-item" href="router1.php?action=formRechercheResidence">Recherche de résidence</a>
+            </li>
             <li><a class="dropdown-item" href="router1.php?action=innovationMVC">Proposez une amélioration du code
                 MVC</a></li>
           </ul>
         </li>
 
+        <!-- Connexion -->
+
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Se connecter</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="router1.php?action=connexionFormulaire">Login</a></li>
-            <li><a class="dropdown-item" href="router1.php?action=inscription">S'inscrire</a></li>
-            <li><a class="dropdown-item" href="router1.php?action=deconnexion">Deconnexion</a></li>
-          </ul>
-        </li>
+          <?php
+          if (isset($_SESSION['login']) && $_SESSION['login'] != 'vide') {
+            echo "<a class='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>" . $_SESSION['login'] . "</a>";
+            // Afficher le login de la personne connectée;
+            echo "<ul class='dropdown-menu'>";
+            echo "<li class='nav-item'><a class='nav-link' href='router1.php?action=deconnexion'>Deconnexion</a></li>";
+            echo "</ul>";
+          } else {
+            echo "<a class='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>Connexion</a>";
+            echo "<ul class='dropdown-menu'>";
+            echo "<li class='nav-item'><a class='nav-link' href='router1.php?action=connexionFormulaire'>Connexion</a></li>";
+            echo "<li class='nav-item'><a class='nav-link' href='router1.php?action=inscription'>Inscription</a></li>";
+            echo "</ul>";
+            ?>
+          </li>
+          <?php
+          } ?>
       </ul>
     </div>
   </div>

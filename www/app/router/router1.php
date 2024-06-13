@@ -1,12 +1,10 @@
 <!-- ----- debut Router1 -->
 <?php
-require ('../controller/ControllerBanque.php');
 require ('../controller/ControllerPatrimoine.php');
-require ('../controller/ControllerCompte.php');
 require ('../controller/ControllerAdministrateur.php');
 require ('../controller/ControllerClient.php');
-require ('../controller/ControllerResidence.php');
-require ('../controller/ControllerConnexion.php');
+require_once ('../controller/ControllerConnexion.php');
+require ('../controller/ControllerInnovations.php');
 session_start();
 
 
@@ -20,90 +18,65 @@ parse_str($query_string, $param);
 // --- $action contient le nom de la méthode statique recherchée
 $action = htmlspecialchars($param["action"]);
 
+$trouve = false;
 // Modification du routeur pour empêcher l'accès à des vues non autorisées
 if ($_SESSION['role'] == ModelPersonne::CLIENT) {
   switch ($action) {
     case "compteReadAllOfClient":
-      ControllerCompte::$action();
-      break;
     case "compteCreate":
-      ControllerCompte::$action();
-      break;
     case "ajoutCompte":
-      ControllerCompte::$action();
-      break;
     case "compteTransfert":
-      ControllerCompte::$action();
-      break;
     case "verifTransfertCompte":
-      ControllerCompte::$action();
+    case "residenceClientReadAll":
+    case "residenceSelection":
+    case "residenceBuyForm":
+    case "residenceBuyValidate":
+    case "patrimoineBilan":
+      $trouve = true;
+      ControllerClient::$action();
       break;
     default:
-      $action = "patrimoineAccueil";
-      ControllerPatrimoine::$action();
+      break;
   }
 } else if ($_SESSION['role'] == ModelPersonne::ADMINISTRATEUR) {
   switch ($action) {
     case "adminReadAll":
-      ControllerAdministrateur::$action();
-      break;
-
     case "clientReadAll":
-      ControllerClient::$action();
-      break;
     case "banqueReadAll":
-      ControllerBanque::$action();
-      break;
     case "banqueCreate":
-      ControllerBanque::$action();
-      break;
     case "banqueCreated":
-      ControllerBanque::$action();
-      break;
     case "banqueSelect":
-      ControllerBanque::$action();
-      break;
     case "comptesBanqueSelected":
-      ControllerCompte::$action();
-      break;
     case "clientReadComptes":
-      ControllerCompte::$action();
-      break;
-    case "clientReadAll":
-      ControllerAdministrateur::$action();
-      break;
-    case "adminReadAll":
-      ControllerAdministrateur::$action();
-      break;
     case "residenceReadAll":
-      ControllerResidence::$action();
+      $trouve = true;
+      ControllerAdministrateur::$action();
       break;
     default:
-      $action = "patrimoineAccueil";
-      ControllerPatrimoine::$action();
-  }
-} else {
-  switch ($action) {
-    case "connexionFormulaire":
-      ControllerConnexion::$action();
       break;
-    case "deconnexion":
-      ControllerConnexion::$action();
-      break;
-    case "inscription":
-      ControllerConnexion::$action();
-      break;
-    case "insertionInscription":
-      ControllerConnexion::$action();
-      break;
-    case "connexion":
-      ControllerConnexion::$action();
-      break;
-    default:
-      $action = "patrimoineAccueil";
-      ControllerPatrimoine::$action();
   }
 }
+if (!$trouve) {
+  switch ($action) {
+
+    case "connexionFormulaire":
+      case "deconnexion":
+      case "inscription":
+      case "insertionInscription":
+      case "connexion":
+        ControllerConnexion::$action();
+        break;
+      case "formRechercheResidence":
+      case "rechercheResidence":
+      case "innovationMVC":
+        ControllerInnovations::$action();
+        break;
+      default:
+        $action = "patrimoineAccueil";
+        ControllerPatrimoine::$action();
+  }
+}
+
 
 // --- Liste des méthodes autorisées
 switch ($action) {
