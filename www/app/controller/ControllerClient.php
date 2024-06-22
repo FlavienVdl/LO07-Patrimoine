@@ -107,17 +107,33 @@ class ControllerClient
     public static function residenceBuyForm()
     {
         $label = $_GET['label'];
-        $titre = "Achat de la résidence : " . $_GET['label'];
+        $messages = array();
         $residence_id = ModelResidence::getResidencePersonneIdByLabel($label);
         $comptesAcheteur = ModelCompte::getAllOfClient($_SESSION['login']);
         $comptesVendeur = ModelCompte::getAllOfClientById($residence_id);
-        $prix = ModelResidence::getResidenceByLabel($label)['prix'];
-        // ----- Construction chemin de la vue
-        include 'config.php';
-        $vue = $root . '/app/view/residence/viewBuyForm.php';
-        if (DEBUG)
-            echo ("ControllerResidence: residenceBuyForm : vue = $vue");
-        require ($vue);
+        $erreur = false;
+        if (count($comptesVendeur) == 0){
+            $messages[] = "Le vendeur n'a pas de compte";
+            $erreur = true;
+        }
+        if (count($comptesAcheteur) == 0){
+            $messages[] = "Vous n'avez pas de compte";
+            $erreur = true;
+        }
+        if ($erreur){
+            $titre = "Achat de la résidence impossible";
+            // ----- Construction chemin de la vue
+            include 'config.php';
+            $vue = $root . '/app/view/viewPatrimoineAccueil.php';
+            require ($vue);
+        } else {
+            $titre = "Achat de la résidence : " . $_GET['label'];
+            $prix = ModelResidence::getResidenceByLabel($label)['prix'];
+            // ----- Construction chemin de la vue
+            include 'config.php';
+            $vue = $root . '/app/view/residence/viewBuyForm.php';
+            require ($vue);
+        }
     }
 
     public static function residenceBuyValidate()
