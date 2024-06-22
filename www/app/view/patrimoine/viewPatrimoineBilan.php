@@ -26,7 +26,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
                 foreach ($comptes as $c) {
                     $capital += $c['montant'];
                     printf(
-                        "<tr class='%s'><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>",
+                        "<tr class='%s'><td>%s</td><td>%s</td><td class='text-end'>%d</td><td class='text-end'>%d</td></tr>",
                         "bg-info",
                         "compte",
                         $c['label'],
@@ -37,7 +37,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
                 foreach ($residences as $r) {
                     $capital += $r['prix'];
                     printf(
-                        "<tr class='%s'><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>",
+                        "<tr class='%s'><td>%s</td><td>%s</td><td class='text-end'>%d</td><td class='text-end'>%d</td></tr>",
                         "bg-success",
                         "résidence",
                         $r["label"],
