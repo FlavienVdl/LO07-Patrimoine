@@ -18,8 +18,9 @@ parse_str($query_string, $param);
 // --- $action contient le nom de la méthode statique recherchée
 $action = htmlspecialchars($param["action"]);
 
-$trouve = false;
 // Modification du routeur pour empêcher l'accès à des vues non autorisées
+
+$trouve = false;
 if ($_SESSION['role'] == ModelPersonne::CLIENT) {
   switch ($action) {
     case "compteReadAllOfClient":
