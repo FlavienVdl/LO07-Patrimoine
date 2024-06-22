@@ -37,7 +37,7 @@ require ($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
                     ?>
                 </select>
                 <label for="montant">Montant de la transaction</label>
-                <input type="number" name='montant' value="<?php echo $prix?>" class="form-control" style="width: 200px">
+                <input type="text" name='montant' value="<?php echo $prix?>" class="form-control" style="width: 200px" readonly>
                 <input type="hidden" name='label' value="<?php echo $_GET["label"] ?>">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
