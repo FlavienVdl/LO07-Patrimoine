@@ -1,8 +1,17 @@
 <!-- ----- début fragmentMenu -->
 
-<nav class="navbar navbar-expand-lg bg-warning fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top bg-warning">
   <div class="container-fluid">
-    <a class="navbar-brand" href="router1.php?action=caveAccueil">CRANSAC-VIDAL</a>
+    <a class="navbar-brand" href="router1.php?action=patrimoineAccueil">CRANSAC-VIDAL
+      <?php
+      if (isset($_SESSION['role']) && $_SESSION['role'] != -1) {
+        $_SESSION['role'] == ModelPersonne::ADMINISTRATEUR ? print (" | administrateur") : print (" | client");
+      }
+      if (isset($_SESSION['login']) && $_SESSION['login'] != 'vide') {
+        echo " | " . $_SESSION['login'];
+      }
+      ?>
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -40,23 +49,18 @@
         <!-- Connexion -->
 
         <li class="nav-item dropdown">
-          <?php
-          if (isset($_SESSION['login']) && $_SESSION['login'] != 'vide') {
-            echo "<a class='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>" . $_SESSION['login'] . "</a>";
-            // Afficher le login de la personne connectée;
-            echo "<ul class='dropdown-menu'>";
-            echo "<li class='nav-item'><a class='nav-link' href='router1.php?action=deconnexion'>Deconnexion</a></li>";
-            echo "</ul>";
-          } else {
-            echo "<a class='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>Connexion</a>";
-            echo "<ul class='dropdown-menu'>";
-            echo "<li class='nav-item'><a class='nav-link' href='router1.php?action=connexionFormulaire'>Connexion</a></li>";
-            echo "<li class='nav-item'><a class='nav-link' href='router1.php?action=inscription'>Inscription</a></li>";
-            echo "</ul>";
-            ?>
-          </li>
-          <?php
-          } ?>
+          <a class='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'>Se
+            connecter</a>
+          <ul class='dropdown-menu'>
+            <?php
+            if (isset($_SESSION['login']) && $_SESSION['login'] != 'vide') { ?>
+              <li class='nav-item'><a class='nav-link' href='router1.php?action=deconnexion'>Deconnexion</a></li>
+            <?php } else { ?>
+              <li class='nav-item'><a class='nav-link' href='router1.php?action=connexionFormulaire'>Connexion</a></li>
+              <li class='nav-item'><a class='nav-link' href='router1.php?action=inscription'>Inscription</a></li>
+            <?php } ?>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
