@@ -11,6 +11,11 @@ require($root . '/app/view/fragment/fragmentPatrimoineHeader.html');
     include $root . '/app/view/fragment/fragmentPatrimoineJumbotron.html';
     ?>
     <h2><?php echo $titre;?></h2>
+    <?php if (isset($messages)) {
+        foreach ($messages as $message) {
+            echo "<p>$message</p>";
+        }
+    }?>
     <table class="table table-striped table-bordered">
         <thead>
         <tr>
